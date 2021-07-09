@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import recipes from './data';
+import Recipes from './Recipes';
+import Categories from './Categories';
 
-function App() {
+const App = () => {
+  const uniqueCategories = ['All', ...new Set(recipes.map(recipe => recipe.category))];
+  const [categories, setCategories] = useState(uniqueCategories);
+  const [items, setItems] = useState(recipes);
+
+  const filterCategory = category => {
+    if (category === 'All') {
+      return setItems(recipes);
+    }
+    const categoryFiltered = recipes.filter(item => item.category === category);
+    setItems(categoryFiltered);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <main>
+      <header>
+        <h1>Menu</h1>
+        <div className="underline"></div>
+        <Categories categories={categories} filterCategory={filterCategory} />
       </header>
-    </div>
+      <div className="content">
+        <Recipes items={items} />
+      </div>
+    </main>
   );
-}
+};
 
 export default App;
