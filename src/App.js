@@ -5,7 +5,7 @@ import Categories from './Categories';
 
 const App = () => {
   const uniqueCategories = ['All', ...new Set(recipes.map(recipe => recipe.category))];
-  const [categories, setCategories] = useState(uniqueCategories);
+  const [categories] = useState(uniqueCategories);
   const [items, setItems] = useState(recipes);
 
   const filterCategory = category => {
